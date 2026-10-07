@@ -1,0 +1,2253 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Majlis Musyawarah Santri (MMS) - Pusat Dokumentasi Bahtsul Masa'il</title>
+    <link rel="icon" type="image/png" href="mms.png">
+
+    <!-- Google Fonts: Plus Jakarta Sans & Amiri -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b',
+                            900: '#022c22',
+                            950: '#011611',
+                        },
+                        sage: {
+                            100: '#f0f4f1',
+                            200: '#d9e2db',
+                            600: '#5a7863',
+                            700: '#455c4d',
+                        },
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            light: '#fef08a',
+                        },
+                        cream: '#fdfbf7',
+                        darkwood: '#2c221e'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Amiri', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS Premium -->
+    <style>
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary-emerald: #064e3b;
+            --deep-emerald: #022c22;
+            --sage-accent: #5a7863;
+            --gold-accent: #d4af37;
+            --gold-light: #f3e5ab;
+            --cream-bg: #fdfbf7;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--cream-bg);
+            color: #1f2937;
+            padding-bottom: 72px;
+        }
+
+        body.home-lock {
+            overflow: hidden !important;
+            height: 100dvh;
+            position: fixed;
+            width: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        body.home-lock #main-container {
+            height: 100dvh;
+            overflow: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #022c22;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #5a7863;
+            border-radius: 2px;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(205,157,0,0.7), rgba(3,78,34,0.8), rgba(6,95,70,0.7), rgba(212,175,55,0.6)), url('background.jpg') center/cover no-repeat;
+            background-size: 400% 400%, cover;
+            animation: gradientMove 15s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%, center; }
+            50% { background-position: 100% 50%, center; }
+            100% { background-position: 0% 50%, center; }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+            color: #fff;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold:active {
+            transform: scale(0.97);
+        }
+
+        .btn-emerald {
+            background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+            color: #fff;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(2, 44, 34, 0.25);
+        }
+
+        .btn-emerald:active {
+            transform: scale(0.97);
+        }
+
+        .masonry-grid {
+            column-count: 2;
+            column-gap: 0.75rem;
+        }
+
+        @media(min-width: 640px) {
+            .masonry-grid {
+                column-count: 3;
+                column-gap: 1rem;
+            }
+        }
+
+        @media(min-width: 1024px) {
+            .masonry-grid {
+                column-count: 4;
+                column-gap: 1.25rem;
+            }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 0.75rem;
+        }
+
+        @media(min-width: 640px) {
+            .masonry-item {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .reader-content {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #2d3748;
+            text-align: justify;
+        }
+
+        .reader-content p {
+            margin-bottom: 1rem;
+        }
+
+        section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content:"";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, #064e3b, #022c22, #065f46, #d4af37, #064e3b);
+            background-size: 400% 400%;
+            animation: sectionGradientMove 18s ease infinite;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes sectionGradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .gallery-download {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            color: white;
+            padding: 6px 8px;
+            border-radius: 50%;
+            font-size: 12px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .gallery-download:hover {
+            background: rgba(234, 179, 8, 0.9);
+        }
+
+        .bottom-nav-item.active {
+            color: #eab308 !important;
+        }
+
+        .bottom-nav-item.active i {
+            transform: translateY(-2px);
+        }
+
+        .hero-search-result {
+            max-height: 55vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body class="bg-[#fdfbf7] text-gray-800 antialiased selection:bg-yellow-500 selection:text-white home-lock">
+
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+    <div class="floating-light top-10 left-5 pointer-events-none absolute w-48 h-48 bg-yellow-500/10 rounded-full blur-2xl"></div>
+    <div class="floating-light bottom-10 right-5 pointer-events-none absolute w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl"></div>
+
+
+    <!-- HEADER -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-40 bg-emerald-950/90 backdrop-blur-md border-b border-white/10 py-2.5 px-4 flex items-center justify-between transition-all duration-300">
+
+        <a href="#beranda" onclick="switchSection('beranda')" class="flex items-center gap-2.5 min-w-0">
+            <img loading="eager" decoding="async" fetchpriority="high" src="mms.png" alt="Logo MMS" class="w-9 h-9 rounded-lg object-contain bg-white/10 p-0.5 shrink-0">
+
+            <div class="min-w-0">
+                <h1 class="text-white font-bold text-sm sm:text-base tracking-tight truncate leading-tight">
+                    Majlis Musyawarah Santri
+                </h1>
+                <p class="text-[10px] text-yellow-300/90 font-medium truncate uppercase tracking-wider">
+                    Bahtsul Masa'il
+                </p>
+            </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-6 bg-black/20 backdrop-blur-md px-5 py-2 rounded-full border border-white/10">
+
+            <button onclick="switchSection('beranda')" class="nav-link text-white/90 hover:text-yellow-400 font-medium text-sm transition-colors active-nav" data-target="beranda">
+                Beranda
+            </button>
+
+            <button onclick="switchSection('arsip')" class="nav-link text-white/90 hover:text-yellow-400 font-medium text-sm transition-colors" data-target="arsip">
+                Arsip Rumusan
+            </button>
+
+            <button onclick="switchSection('galeri')" class="nav-link text-white/90 hover:text-yellow-400 font-medium text-sm transition-colors" data-target="galeri">
+                Galeri
+            </button>
+
+            <button onclick="switchSection('tentang')" class="nav-link text-white/90 hover:text-yellow-400 font-medium text-sm transition-colors" data-target="tentang">
+                Tentang MMS
+            </button>
+
+            <button onclick="switchSection('agenda')" class="nav-link text-white/90 hover:text-yellow-400 font-medium text-sm transition-colors" data-target="agenda">
+                Agenda
+            </button>
+
+        </nav>
+
+        <div class="flex items-center gap-2 text-white/90">
+
+            <!-- TOMBOL LOGIN ADMIN -->
+            <button onclick="openLoginModal()"
+               class="px-3 py-1.5 rounded-full bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                <i class="fa-solid fa-lock text-[10px]"></i>
+                <span class="hidden sm:inline">Login Admin</span>
+            </button>
+
+            <a href="https://wa.me/6287846714123?text=Assalamu%27alaikum%2C%20saya%20ingin%20bertanya%20mengenai%20Forum%20MMS."
+               target="_blank"
+               class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs hover:text-yellow-400 transition-colors">
+
+                <i class="fa-brands fa-whatsapp"></i>
+
+            </a>
+
+        </div>
+    </header>
+
+
+    <main id="main-container">
+
+        <!-- SECTION BERANDA -->
+        <section id="section-beranda"
+            class="hero-bg h-[100dvh] flex flex-col justify-between pt-16 pb-[76px] px-4 sm:px-6 text-white relative overflow-hidden">
+
+            <div class="max-w-4xl mx-auto text-center my-auto py-1">
+
+                <span class="inline-block py-1 px-3 rounded-full bg-yellow-500/20 text-yellow-300 text-[9px] font-semibold tracking-wider uppercase border border-yellow-500/30 mb-2 backdrop-blur-md">
+                    Forum Bahtsul Masa'il Antar Pesantren
+                </span>
+
+                <h1 class="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight mb-2 leading-tight font-sans">
+                    Majlis Musyawarah Santri
+                </h1>
+
+                <p class="text-xs sm:text-base text-emerald-100 font-light max-w-xl mx-auto mb-4 italic leading-relaxed">
+                    "Merawat Tradisi Keilmuan Ulama Melalui Musyawarah Santri"
+                </p>
+
+                <div class="max-w-md mx-auto mb-4 relative">
+
+                    <div class="glass-panel p-2 rounded-xl flex items-center gap-3 cursor-pointer hover:bg-white/15 transition-all shadow-lg border border-yellow-500/30"
+                         onclick="focusHeroSearch()">
+
+                        <div class="w-7 h-7 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 text-xs shrink-0">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+                        <input
+                            type="text"
+                            id="hero-inline-search"
+                            placeholder="Cari rumusan MMS disini..."
+                            oninput="handleHeroSearch(event)"
+                            onclick="event.stopPropagation()"
+                            class="w-full bg-transparent text-white placeholder-white/70 text-xs sm:text-sm font-light focus:outline-none">
+
+                    </div>
+
+                </div>
+
+                <div class="max-w-4xl mx-auto w-full space-y-3">
+
+                    <div class="flex items-center justify-between bg-black/25 backdrop-blur-md p-3 rounded-xl border border-white/10">
+
+                        <div class="flex items-center gap-2.5 min-w-0 pr-2">
+
+                            <img
+                                loading="eager"
+                                decoding="async"
+                                src="logopondok.png"
+                                alt="Logo PP. Al Hikmah Darussalam"
+                                class="w-9 h-9 rounded-lg object-contain bg-white/10 p-0.5 shrink-0">
+
+                            <div class="min-w-0 text-left">
+
+                                <h2 class="text-xs sm:text-sm font-bold tracking-tight text-white truncate">
+                                    PP. Al Hikmah Darussalam
+                                </h2>
+
+                                <p class="text-[10px] text-yellow-200/90 font-medium truncate">
+                                    Tepa'nah Barat Durjan Kokop Bangkalan
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0">
+
+                            <a
+                                href="https://www.google.com/maps/search/?api=1&query=PP.+Al+Hikmah+Darussalam+Tepa%27nah+Barat+Durjan+Kokop+Bangkalan"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn-gold px-3 py-1.5 rounded-lg font-bold text-xs flex items-center gap-1.5">
+
+                                <i class="fa-solid fa-location-dot text-[10px]"></i>
+
+                                <span>Lokasi</span>
+
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <div class="glass-card bg-emerald-950/90 border-yellow-500/40 p-3 rounded-xl flex items-center justify-between gap-3 cursor-pointer group"
+                         onclick="switchSection('agenda')">
+
+                        <div class="flex items-center gap-3 min-w-0">
+
+                            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-emerald-950 text-sm font-bold shrink-0 shadow">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+
+                            <div class="min-w-0">
+
+                                <span class="text-[9px] font-semibold text-yellow-400 uppercase tracking-wider block">
+                                    Agenda Terdekat
+                                </span>
+
+                                <h3 id="home-agenda-title" class="text-xs sm:text-sm font-bold text-white truncate group-hover:text-yellow-300">
+                                    Majlis Musyawarah Santri Ke-37
+                                </h3>
+
+                                <p id="home-agenda-date" class="text-[10px] text-emerald-200 truncate">
+                                    <i class="fa-regular fa-clock mr-1 text-yellow-400"></i>
+                                    7 Oktober 2026 M
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <span class="text-yellow-400 text-xs shrink-0 pr-1">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION ARSIP -->
+        <section id="section-arsip" class="min-h-[calc(100vh-60px)] pt-16 pb-8 px-4 sm:px-6 hidden">
+
+            <div class="max-w-7xl mx-auto">
+
+                <div class="text-center max-w-2xl mx-auto mb-6">
+
+                    <span class="text-emerald-700 font-bold uppercase tracking-widest text-[10px] py-0.5 px-2.5 bg-emerald-100 rounded-full">
+                        Perpustakaan Digital
+                    </span>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 font-sans">
+                        Arsip Rumusan Bahtsul Masa'il
+                    </h2>
+
+                    <p class="text-gray-600 text-xs sm:text-sm mt-1">
+                        Pusat dokumentasi dan referensi ilmiah hasil keputusan Majlis Musyawarah Santri.
+                    </p>
+
+                </div>
+
+                <div id="rumusan-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+                <div id="empty-state" class="hidden text-center py-12">
+
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto text-xl mb-3">
+                        <i class="fa-solid fa-folder-closed"></i>
+                    </div>
+
+                    <h3 class="text-base font-bold text-gray-800">
+                        Rumusan Tidak Ditemukan
+                    </h3>
+
+                    <p class="text-gray-500 text-xs mt-1">
+                        Coba kata kunci atau filter lain yang sesuai.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION BACA -->
+        <section id="section-baca" class="min-h-[calc(100vh-60px)] pt-16 pb-8 px-4 sm:px-6 hidden">
+
+            <div class="max-w-3xl mx-auto">
+
+                <button onclick="switchSection('arsip')"
+                        class="inline-flex items-center gap-1.5 text-emerald-800 font-bold text-xs sm:text-sm mb-4 hover:text-emerald-950 transition-colors">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    <span>Kembali ke Arsip</span>
+
+                </button>
+
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-5 sm:p-8 relative overflow-hidden">
+
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gray-100">
+
+                        <div id="reading-progress"
+                             class="h-full bg-yellow-500 w-0 transition-all duration-150"></div>
+
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-gray-100 text-[11px] sm:text-xs">
+
+                        <div>
+
+                            <span id="reader-tema"
+                                  class="font-bold uppercase tracking-wider px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
+                                Tema
+                            </span>
+
+                            <span id="reader-tanggal" class="text-gray-500 ml-2">
+                                <i class="fa-regular fa-calendar mr-1"></i>
+                                Tanggal
+                            </span>
+
+                        </div>
+
+                        <span class="text-gray-500">
+                            <i class="fa-regular fa-clock mr-1"></i>
+                            <span id="reader-est-time">3 min</span> baca
+                        </span>
+
+                    </div>
+
+                    <h1 id="reader-judul"
+                        class="text-xl sm:text-2xl md:text-3xl font-extrabold text-emerald-950 mb-6 leading-tight font-sans">
+                        Judul Rumusan Bahtsul Masa'il
+                    </h1>
+
+                    <div id="reader-isi" class="reader-content font-sans space-y-4"></div>
+
+                    <div class="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+
+                        <div class="flex items-center gap-2">
+
+                            <span class="text-xs font-bold text-gray-700">
+                                Bagikan:
+                            </span>
+
+                            <button onclick="shareToWhatsApp()"
+                                    class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-800 hover:text-white transition-colors flex items-center justify-center text-xs"
+                                    title="Bagikan ke WhatsApp">
+
+                                <i class="fa-brands fa-whatsapp"></i>
+
+                            </button>
+
+                        </div>
+
+                        <button onclick="window.print()"
+                                class="px-4 py-2 rounded-xl bg-gray-100 text-gray-800 hover:bg-gray-200 font-semibold text-xs flex items-center gap-1.5 transition-colors">
+
+                            <i class="fa-solid fa-print text-yellow-500"></i>
+                            Print
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION GALERI -->
+        <section id="section-galeri" class="min-h-[calc(100vh-60px)] pt-16 pb-8 px-4 sm:px-6 hidden">
+
+            <div class="max-w-7xl mx-auto">
+
+                <div class="text-center max-w-2xl mx-auto mb-6">
+
+                    <span class="text-emerald-700 font-bold uppercase tracking-widest text-[10px] py-0.5 px-2.5 bg-emerald-100 rounded-full">
+                        Dokumentasi Visual
+                    </span>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 font-sans">
+                        Galeri Kegiatan MMS
+                    </h2>
+
+                    <p class="text-gray-600 text-xs sm:text-sm mt-1">
+                        Kumpulan momen terbaik dari seluruh rangkaian kegiatan Majlis Musyawarah Santri.
+                    </p>
+
+                </div>
+
+                <div id="gallery-grid" class="masonry-grid">
+
+                    <!-- FOTO 32 TETAP -->
+                    <div class="masonry-item group relative rounded-xl overflow-hidden shadow-sm cursor-pointer bg-black">
+                        <a href="foto32.jpeg" download class="gallery-download" title="Download Foto">
+                            <i class="fa-solid fa-download"></i>
+                        </a>
+
+                        <div onclick="openLightbox('foto32.jpeg', 'Dokumentasi Majlis Musyawarah Santri ke-36')">
+                            <img loading="lazy" decoding="async" src="foto32.jpeg" alt="Galeri 32" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300">
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                                <span class="text-[9px] font-bold text-yellow-400 uppercase">10 Agu 2026</span>
+                                <h3 class="text-white font-bold text-xs leading-snug">MMS ke-36</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION TENTANG -->
+        <section id="section-tentang" class="min-h-[calc(100vh-60px)] pt-16 pb-8 px-4 sm:px-6 hidden">
+
+            <div class="max-w-4xl mx-auto space-y-6">
+
+                <div class="text-center max-w-2xl mx-auto mb-4">
+
+                    <span class="text-emerald-700 font-bold uppercase tracking-widest text-[10px] py-0.5 px-2.5 bg-emerald-100 rounded-full">
+                        Profil Lembaga
+                    </span>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 font-sans">
+                        Tentang Majlis Musyawarah Santri
+                    </h2>
+
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-5 sm:p-8 space-y-4">
+
+                    <h3 class="text-lg font-bold text-emerald-900 border-b pb-2">
+                        Sejarah & Latar Belakang
+                    </h3>
+
+                    <p class="text-gray-700 text-xs sm:text-sm leading-relaxed text-justify">
+                        Majlis Musyawarah Santri (MMS) Pondok Pesantren Al Hikmah Darussalam Tepa'nah Barat Durjan Kokop Bangkalan adalah forum ilmiah inter-pesantren yang didirikan sebagai wadah pengkajian masalah-masalah keagamaan kontemporer maupun klasik (Bahtsul Masa'il). Forum ini berkomitmen melestarikan tradisi intelektual Islam Ahlussunnah wal Jamaah melalui metodologi pengambilan hukum (istinbath al-ahkam) yang akurat dan dapat dipertanggungjawabkan.
+                    </p>
+
+                    <h3 class="text-lg font-bold text-emerald-900 border-b pb-2 pt-2">
+                        Visi & Misi
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                        <div class="bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+
+                            <h4 class="font-bold text-emerald-900 text-xs sm:text-sm mb-1">
+                                <i class="fa-solid fa-eye text-yellow-600 mr-1.5"></i>
+                                Visi
+                            </h4>
+
+                            <p class="text-gray-600 text-xs leading-relaxed">
+                                Menjadi pusat rujukan Bahtsul Masa'il pesantren yang unggul dalam ketepatan hukum dan keluasan referensi kitab kuning.
+                            </p>
+
+                        </div>
+
+                        <div class="bg-yellow-50/50 p-4 rounded-xl border border-yellow-100">
+
+                            <h4 class="font-bold text-yellow-900 text-xs sm:text-sm mb-1">
+                                <i class="fa-solid fa-bullseye text-yellow-600 mr-1.5"></i>
+                                Misi
+                            </h4>
+
+                            <p class="text-gray-600 text-xs leading-relaxed">
+                                Mengembangkan tradisi musyawarah santri, merumuskan solusi atas problematika umat, serta mendokumentasikan produk hukum secara digital.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="text-lg font-bold text-emerald-900 border-b pb-2 pt-2">
+                        Kontak & Media Sosial
+                    </h3>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-1">
+
+                        <a href="https://www.youtube.com/@alhikmahdarussalam1980"
+                           target="_blank"
+                           class="px-3 py-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-brands fa-youtube"></i>
+                            YouTube
+                        </a>
+
+                        <a href="https://www.tiktok.com/@tepbar.media"
+                           target="_blank"
+                           class="px-3 py-2 rounded-xl bg-gray-100 text-gray-900 hover:bg-black hover:text-white transition-colors text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-brands fa-tiktok"></i>
+                            TikTok
+                        </a>
+
+                        <a href="https://www.instagram.com/tepbar_media/"
+                           target="_blank"
+                           class="px-3 py-2 rounded-xl bg-pink-50 text-pink-600 hover:bg-pink-600 hover:text-white transition-colors text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-brands fa-instagram"></i>
+                            Instagram
+                        </a>
+
+                        <a href="https://www.facebook.com/ppalhikmahdarussalam?locale=id_ID"
+                           target="_blank"
+                           class="px-3 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-brands fa-facebook"></i>
+                            Facebook
+                        </a>
+
+                        <a href="https://wa.me/6287846714123"
+                           target="_blank"
+                           class="px-3 py-2 rounded-xl bg-green-50 text-green-600 hover:bg-green-600 hover:text-white transition-colors text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION AGENDA -->
+        <section id="section-agenda" class="min-h-[calc(100vh-60px)] pt-16 pb-8 px-4 sm:px-6 hidden">
+
+            <div class="max-w-4xl mx-auto space-y-6">
+
+                <div class="text-center max-w-2xl mx-auto mb-4">
+
+                    <span class="text-emerald-700 font-bold uppercase tracking-widest text-[10px] py-0.5 px-2.5 bg-emerald-100 rounded-full">
+                        Jadwal Kegiatan
+                    </span>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-emerald-950 mt-2 font-sans">
+                        Agenda & As'ilah Musyawarah
+                    </h2>
+
+                </div>
+
+
+                <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-5 sm:p-8 space-y-6">
+
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-emerald-950 text-white">
+
+                        <div class="flex items-center gap-3">
+
+                            <div class="w-12 h-12 rounded-xl bg-yellow-500 flex items-center justify-center text-emerald-950 font-bold text-lg shrink-0">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+
+                            <div>
+
+                                <span class="text-[10px] text-yellow-400 font-bold uppercase tracking-wider">
+                                    Agenda Utama
+                                </span>
+
+                                <h3 id="agenda-title" class="text-base sm:text-lg font-bold">
+                                    Majlis Musyawarah Santri Ke-37
+                                </h3>
+
+                                <p id="agenda-date" class="text-xs text-emerald-200">
+                                    26 Rabiuts Tsani 1448 H / 7 Oktober 2026 M
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PEMBAHASAN AS'ILAH -->
+                    <div class="space-y-4">
+
+                        <div class="flex items-center gap-2 border-b pb-2">
+
+                            <i class="fa-solid fa-book-open text-yellow-600"></i>
+
+                            <h4 class="font-bold text-emerald-950 text-sm">
+                                Pembahasan As'ilah Musyawarah
+                            </h4>
+
+                        </div>
+
+                        <div id="agenda-questions-container"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SECTION DASHBOARD ADMIN -->
+        <section id="section-admin" class="min-h-[calc(100vh-60px)] pt-20 pb-12 px-4 sm:px-6 hidden bg-gray-50">
+            <div class="max-w-6xl mx-auto space-y-6">
+                <!-- Header Admin -->
+                <div class="bg-emerald-950 text-white p-6 rounded-2xl shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-semibold text-yellow-400 uppercase tracking-wider">Panel Kontrol</span>
+                        <h2 class="text-xl sm:text-2xl font-black">Dashboard Admin MMS</h2>
+                        <p class="text-xs text-emerald-200 mt-1">Kelola arsip rumusan, galeri, agenda, as'ilah, dan kredensial admin.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchSection('beranda')" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold transition-colors">
+                            <i class="fa-solid fa-globe mr-1.5"></i> Lihat Website
+                        </button>
+                        <button onclick="adminLogout()" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-xs font-semibold text-white transition-colors">
+                            <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Logout
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Menu Admin -->
+                <div class="flex flex-wrap gap-2 border-b border-gray-200 pb-3">
+                    <button onclick="switchAdminTab('tab-rumusan')" id="btn-tab-rumusan" class="px-4 py-2 rounded-xl font-bold text-xs bg-emerald-900 text-white transition-colors">
+                        <i class="fa-solid fa-folder-open mr-1.5"></i> Kelola Rumusan
+                    </button>
+                    <button onclick="switchAdminTab('tab-galeri')" id="btn-tab-galeri" class="px-4 py-2 rounded-xl font-bold text-xs bg-white text-gray-700 hover:bg-gray-100 transition-colors border border-gray-200">
+                        <i class="fa-solid fa-images mr-1.5"></i> Kelola Galeri
+                    </button>
+                    <button onclick="switchAdminTab('tab-agenda')" id="btn-tab-agenda" class="px-4 py-2 rounded-xl font-bold text-xs bg-white text-gray-700 hover:bg-gray-100 transition-colors border border-gray-200">
+                        <i class="fa-solid fa-calendar-days mr-1.5"></i> Kelola Agenda & As'ilah
+                    </button>
+                    <button onclick="switchAdminTab('tab-settings')" id="btn-tab-settings" class="px-4 py-2 rounded-xl font-bold text-xs bg-white text-gray-700 hover:bg-gray-100 transition-colors border border-gray-200">
+                        <i class="fa-solid fa-key mr-1.5"></i> Ganti Nomor & Sandi
+                    </button>
+                </div>
+
+                <!-- TAB 1: KELOLA RUMUSAN -->
+                <div id="tab-rumusan" class="admin-tab-content space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                        <h3 class="font-extrabold text-emerald-950 text-base mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-plus-circle text-yellow-600"></i> Tambah Rumusan Baru
+                        </h3>
+                        <form onsubmit="handleTambahRumusan(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Judul Rumusan</label>
+                                    <input type="text" id="admin-rumusan-judul" required placeholder="Contoh: Status Hukum..." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tema / Kategori</label>
+                                    <input type="text" id="admin-rumusan-tema" required placeholder="Contoh: Muamalah / Ibadah" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tanggal (Tampil)</label>
+                                    <input type="text" id="admin-rumusan-tanggal" required placeholder="Contoh: 15 Januari 2026" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Estimasi Waktu Baca</label>
+                                    <input type="text" id="admin-rumusan-est" required placeholder="Contoh: 4 min" class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Ringkasan Singkat (Snippet)</label>
+                                <textarea id="admin-rumusan-ringkasan" rows="2" required placeholder="Ringkasan singkat isi rumusan..." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Isi Rumusan Lengkap (Rich Text)</label>
+                                <!-- WYSIWYG Toolbar -->
+                                <div class="flex flex-wrap gap-1 bg-gray-100 p-2 rounded-t-xl border border-gray-200 text-xs">
+                                    <button type="button" onclick="formatText('bold')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 font-bold" title="Bold"><i class="fa-solid fa-bold"></i></button>
+                                    <button type="button" onclick="formatText('italic')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 italic" title="Italic"><i class="fa-solid fa-italic"></i></button>
+                                    <button type="button" onclick="formatText('underline')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 underline" title="Underline"><i class="fa-solid fa-underline"></i></button>
+                                    <span class="w-[1px] bg-gray-300 mx-1"></span>
+                                    <button type="button" onclick="formatText('justifyLeft')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Rata Kiri"><i class="fa-solid fa-align-left"></i></button>
+                                    <button type="button" onclick="formatText('justifyCenter')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Rata Tengah"><i class="fa-solid fa-align-center"></i></button>
+                                    <button type="button" onclick="formatText('justifyRight')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Rata Kanan"><i class="fa-solid fa-align-right"></i></button>
+                                    <button type="button" onclick="formatText('justifyFull')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Justify"><i class="fa-solid fa-align-justify"></i></button>
+                                    <span class="w-[1px] bg-gray-300 mx-1"></span>
+                                    <button type="button" onclick="formatText('insertUnorderedList')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Bullet List"><i class="fa-solid fa-list-ul"></i></button>
+                                    <button type="button" onclick="formatText('insertOrderedList')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200" title="Numbered List"><i class="fa-solid fa-list-ol"></i></button>
+                                    <button type="button" onclick="formatText('formatBlock', '<p>')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 font-semibold" title="Paragraf">P</button>
+                                    <button type="button" onclick="formatText('formatBlock', '<h3>')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 font-bold" title="Heading">H3</button>
+                                </div>
+                                <div id="admin-rumusan-editor" contenteditable="true" class="w-full px-3 py-3 rounded-b-xl border border-t-0 border-gray-200 text-xs min-h-[160px] focus:outline-none bg-white font-sans" style="line-height: 1.6;"></div>
+                            </div>
+                            <button type="submit" class="btn-gold px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan Rumusan Baru
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Daftar Rumusan Tersimpan -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                        <h3 class="font-extrabold text-emerald-950 text-base mb-4">Daftar Rumusan Tersimpan</h3>
+                        <div id="admin-rumusan-list" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: KELOLA GALERI -->
+                <div id="tab-galeri" class="admin-tab-content space-y-6 hidden">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                        <h3 class="font-extrabold text-emerald-950 text-base mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-upload text-yellow-600"></i> Upload Foto ke Galeri
+                        </h3>
+                        <form onsubmit="handleUploadGaleri(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Pilih Foto (File Gambar)</label>
+                                <input type="file" id="admin-galeri-file" accept="image/*" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Keterangan / Caption Foto</label>
+                                <input type="text" id="admin-galeri-caption" required placeholder="Contoh: Musyawarah pleno santri..." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                            </div>
+                            <button id="admin-galeri-submit" type="submit" class="btn-gold px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload & Simpan Foto</span>
+                            </button>
+                            <p id="admin-galeri-status" class="hidden text-xs font-semibold text-emerald-700"></p>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                        <h3 class="font-extrabold text-emerald-950 text-base mb-4">Galeri Foto Aktif</h3>
+                        <div id="admin-gallery-list" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: KELOLA AGENDA & AS'ILAH -->
+                <div id="tab-agenda" class="admin-tab-content space-y-6 hidden">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+                        <h3 class="font-extrabold text-emerald-950 text-base">Pengaturan Agenda Utama</h3>
+                        <form onsubmit="handleUpdateAgendaInfo(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Judul Agenda</label>
+                                    <input type="text" id="admin-agenda-title-input" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tanggal Lengkap</label>
+                                    <input type="text" id="admin-agenda-date-input" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Tanggal Singkat (Home)</label>
+                                <input type="text" id="admin-agenda-shortdate-input" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                            </div>
+                            <button type="submit" class="btn-emerald px-4 py-2 rounded-xl font-bold text-xs">Simpan Perubahan Agenda</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-extrabold text-emerald-950 text-base">Kelola As'ilah / Pertanyaan</h3>
+                            <button onclick="openAddQuestionModal()" class="btn-gold px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Tambah As'ilah
+                            </button>
+                        </div>
+                        <div id="admin-questions-list" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: GANTI NOMOR DAN SANDI -->
+                <div id="tab-settings" class="admin-tab-content space-y-6 hidden">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 max-w-lg">
+                        <h3 class="font-extrabold text-emerald-950 text-base mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-yellow-600"></i> Ganti Kredensial Login Admin
+                        </h3>
+                        <form onsubmit="handleChangeCredentials(event)" class="space-y-4">
+                            <div class="p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs text-gray-600">
+                                Email admin dikelola melalui Supabase Authentication. Di sini Anda dapat mengganti sandi admin setelah berhasil login.
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Sandi Admin Baru</label>
+                                <input type="password" id="admin-new-password" required class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                            </div>
+                            <button type="submit" class="btn-gold px-5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2">
+                                <i class="fa-solid fa-check"></i> Simpan Kredensial Baru
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-emerald-950/95 backdrop-blur-xl border-t border-yellow-500/20 py-2 px-3 flex items-center justify-around shadow-2xl">
+
+        <button onclick="switchSection('beranda')"
+                class="bottom-nav-item active flex flex-col items-center gap-1 text-yellow-400 transition-colors py-1 px-3"
+                data-target="beranda">
+
+            <i class="fa-solid fa-house text-base"></i>
+
+            <span class="text-[10px] font-medium">
+                Beranda
+            </span>
+
+        </button>
+
+
+        <button onclick="switchSection('arsip')"
+                class="bottom-nav-item flex flex-col items-center gap-1 text-white/70 hover:text-yellow-400 transition-colors py-1 px-3"
+                data-target="arsip">
+
+            <i class="fa-solid fa-folder-open text-base"></i>
+
+            <span class="text-[10px] font-medium">
+                Arsip
+            </span>
+
+        </button>
+
+
+        <button onclick="switchSection('galeri')"
+                class="bottom-nav-item flex flex-col items-center gap-1 text-white/70 hover:text-yellow-400 transition-colors py-1 px-3"
+                data-target="galeri">
+
+            <i class="fa-solid fa-images text-base"></i>
+
+            <span class="text-[10px] font-medium">
+                Galeri
+            </span>
+
+        </button>
+
+
+        <button onclick="switchSection('tentang')"
+                class="bottom-nav-item flex flex-col items-center gap-1 text-white/70 hover:text-yellow-400 transition-colors py-1 px-3"
+                data-target="tentang">
+
+            <i class="fa-solid fa-circle-info text-base"></i>
+
+            <span class="text-[10px] font-medium">
+                Tentang
+            </span>
+
+        </button>
+
+
+        <button onclick="switchSection('agenda')"
+                class="bottom-nav-item flex flex-col items-center gap-1 text-white/70 hover:text-yellow-400 transition-colors py-1 px-3"
+                data-target="agenda">
+
+            <i class="fa-solid fa-calendar-days text-base"></i>
+
+            <span class="text-[10px] font-medium">
+                Agenda
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- LOGIN ADMIN MODAL -->
+    <div id="login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative border border-yellow-500/30">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-sm">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center mx-auto text-lg mb-2">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="text-lg font-bold text-emerald-950">Login Admin MMS</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Masukkan email dan sandi akun admin Supabase.</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Email Admin</label>
+                    <input type="email" id="login-email" required placeholder="email admin..." class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Sandi Admin</label>
+                    <input type="password" id="login-password" required placeholder="••••••" class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                </div>
+                <button type="submit" class="w-full btn-gold py-2.5 rounded-xl font-bold text-xs tracking-wide">
+                    MASUK DASHBOARD ADMIN
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- MODAL EDIT / TAMBAH AS'ILAH -->
+    <div id="question-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90dvh] overflow-hidden flex flex-col">
+            <button onclick="closeQuestionModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-sm">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+            <h3 id="question-modal-title" class="text-base font-bold text-emerald-950 mb-4">Tambah / Edit As'ilah</h3>
+            <form onsubmit="handleSaveQuestion(event)" class="space-y-4 flex flex-col min-h-0 overflow-hidden">
+                <input type="hidden" id="edit-q-index" value="-1">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Judul / Pertanyaan Singkat</label>
+                    <input type="text" id="admin-q-title" required placeholder="Contoh: Pertanyaan 3: ..." class="w-full px-3 py-2 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-emerald-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Isi As'ilah / Deskripsi (Rich Text)</label>
+                    <div class="flex flex-wrap gap-1 bg-gray-100 p-2 rounded-t-xl border border-gray-200 text-xs">
+                        <button type="button" onclick="formatTextQ('bold')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 font-bold"><i class="fa-solid fa-bold"></i></button>
+                        <button type="button" onclick="formatTextQ('italic')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 italic"><i class="fa-solid fa-italic"></i></button>
+                        <button type="button" onclick="formatTextQ('underline')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200 underline"><i class="fa-solid fa-underline"></i></button>
+                        <span class="w-[1px] bg-gray-300 mx-1"></span>
+                        <button type="button" onclick="formatTextQ('justifyLeft')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-align-left"></i></button>
+                        <button type="button" onclick="formatTextQ('justifyCenter')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-align-center"></i></button>
+                        <button type="button" onclick="formatTextQ('justifyRight')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-align-right"></i></button>
+                        <button type="button" onclick="formatTextQ('justifyFull')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-align-justify"></i></button>
+                        <span class="w-[1px] bg-gray-300 mx-1"></span>
+                        <button type="button" onclick="formatTextQ('insertUnorderedList')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-list-ul"></i></button>
+                        <button type="button" onclick="formatTextQ('insertOrderedList')" class="px-2.5 py-1 bg-white rounded border hover:bg-gray-200"><i class="fa-solid fa-list-ol"></i></button>
+                    </div>
+                    <div id="admin-q-editor" contenteditable="true" class="w-full px-3 py-3 rounded-b-xl border border-t-0 border-gray-200 text-xs min-h-[140px] max-h-[45dvh] overflow-y-auto focus:outline-none bg-white font-sans" style="line-height: 1.6;"></div>
+                </div>
+                <div class="pt-2 bg-white shrink-0"><button type="submit" class="btn-gold w-full px-5 py-2.5 rounded-xl font-bold text-xs">Simpan As'ilah</button></div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- SEARCH MODAL -->
+    <div id="search-modal"
+         class="fixed inset-0 bg-emerald-950/90 backdrop-blur-md z-50 flex flex-col items-center justify-start pt-16 px-4 hidden">
+
+        <div class="max-w-xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-yellow-500/30">
+
+            <div class="p-4 bg-emerald-900 text-white flex items-center justify-between">
+
+                <h3 class="font-bold text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass text-yellow-400"></i>
+                    Cari Rumusan MMS
+                </h3>
+
+                <button onclick="closeSearchModal()"
+                        class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs hover:bg-white/20">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+            <div class="p-4">
+
+                <input
+                    type="text"
+                    id="modal-search-input"
+                    placeholder="Ketik kata kunci pencarian..."
+                    oninput="handleModalSearch(event)"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:border-emerald-700 text-sm mb-4">
+
+                <div id="modal-search-results"
+                     class="hero-search-result space-y-2">
+
+                    <p class="text-xs text-gray-400 text-center py-6">
+                        Mulai ketik untuk mencari rumusan...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightbox-modal"
+         class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-4 hidden"
+         onclick="closeLightbox()">
+
+        <button
+            class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 text-white flex items-center justify-center text-base hover:bg-white/30">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+        <img id="lightbox-img"
+             src=""
+             alt="Lightbox"
+             class="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl mb-4">
+
+        <p id="lightbox-caption"
+           class="text-white text-xs sm:text-sm text-center font-medium max-w-lg px-4">
+        </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+         ========================================== -->
+    <script>
+
+        /* =========================================================
+           DATA DEFAULT & PERSISTENCE
+           ========================================================= */
+
+        const DEFAULT_RUMUSAN = [
+            {
+                id: 1,
+                judul: "Status Hukum Transaksi Cryptocurrency dalam Perspektif Fiqih Muamalah",
+                tema: "Muamalah",
+                tahun: "2026",
+                tanggal: "15 Januari 2026",
+                estTime: "4 min",
+                ringkasan: "Kajian mendalam mengenai hukum kepemilikan dan transaksi aset kripto berdasarkan prinsip dharar, mal, dan qabdh.",
+                isi: `
+                    <p>
+                        Majlis Musyawarah Santri (MMS) Pondok Pesantren Al Hikmah Darussalam telah mengkaji secara komprehensif mengenai status hukum transaksi mata uang kripto (cryptocurrency) di era digital saat ini.
+                    </p>
+                    <p>
+                        Berdasarkan hasil musyawarah yang merujuk pada Kitab Al-Fiqh al-Islami wa Adillatuhu serta kaidah ushul fiqh <em>"Tasorruf al-Imam 'ala al-Raiyyah manutun bil maslahah"</em>, disimpulkan bahwa aset kripto yang tidak memiliki underlying asset yang jelas serta mengandung spekulasi tinggi (gharar fahisy) diharamkan untuk diperjualbelikan sebagai alat tukar spekulatif.
+                    </p>
+                    <p>
+                        Namun demikian, jika token atau koin tersebut merepresentasikan aset riil yang diakui secara regulasi dan hukum syariat, serta memenuhi unsur sil'ah yang sah, maka hukumnya diperbolehkan dengan ketentuan yang ketat.
+                    </p>
+                `
+            }
+        ];
+
+
+        const DEFAULT_AGENDA = {
+            title: "Majlis Musyawarah Santri Ke-37",
+            date: "26 Rabiuts Tsani 1448 H / 7 Oktober 2026 M",
+            shortDate: "7 Oktober 2026 M",
+            questions: [
+                {
+                    id: 1,
+                    title: "Pertanyaan 1: Penggunaan AI dalam Keputusan Fiqih",
+                    content: `
+                        <p>
+                            Perkembangan teknologi kecerdasan buatan (Artificial Intelligence/AI) telah memungkinkan seseorang memperoleh berbagai informasi keagamaan, termasuk penjelasan mengenai hukum fiqih dan penyusunan draf pembahasan Bahtsul Masa'il. AI dapat memberikan jawaban berdasarkan data dan sumber yang telah dipelajarinya, namun AI bukan seorang mujtahid dan tidak memiliki kemampuan untuk melakukan tashih terhadap kitab maupun memahami konteks persoalan secara utuh sebagaimana seorang ahli fiqih.
+                        </p>
+                        <p>
+                            <strong class="text-emerald-800">Pertanyaan:</strong>
+                            Bagaimana hukum menggunakan hasil analisis kecerdasan buatan (AI) sebagai bahan dalam menyusun draf Bahtsul Masa'il dan merumuskan hukum taklify terhadap suatu kasus baru, sebelum hasil tersebut diteliti, diverifikasi, dan ditashih oleh mushohhih?
+                        </p>
+                    `
+                },
+                {
+                    id: 2,
+                    title: "Pertanyaan 2: Sistem Pembayaran Digital Cross-Border",
+                    content: `
+                        <p>
+                            Perkembangan transaksi digital memungkinkan seseorang melakukan pembayaran lintas negara (cross-border) secara cepat tanpa harus menggunakan lembaga perantara konvensional seperti bank. Dalam praktiknya, transaksi dapat dilakukan melalui berbagai sistem pembayaran digital yang melibatkan konversi mata uang, pemrosesan elektronik, serta pihak penyedia layanan teknologi keuangan.
+                        </p>
+                        <p>
+                            <strong class="text-emerald-800">Pertanyaan:</strong>
+                            Bagaimana tinjauan fiqih muamalah terhadap sistem pembayaran digital cross-border yang dilakukan tanpa melalui lembaga perantara konvensional, khususnya terkait akad, proses perpindahan dana, biaya layanan, serta keabsahan transaksi antara pihak yang berada di negara berbeda?
+                        </p>
+                    `
+                }
+            ]
+        };
+
+
+        // =========================================================
+        // SUPABASE CONNECTION
+        // =========================================================
+        const SUPABASE_URL = "https://ixkjathebuomhfrevxxm.supabase.co";
+        const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uMutk7we0LlB_Z-mSKA8uQ_0XdPvE3X";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+        let dbRumusan = [];
+        let agendaData = {};
+        let galleryData = [];
+        let adminCreds = { phone: "", pass: "" };
+        let isAdminLoggedIn = false;
+
+
+
+
+        function deepClone(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+
+        async function loadData() {
+            // Agenda, Rumusan, dan Galeri sekarang diambil dari Supabase.
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            isAdminLoggedIn = !!sessionData.session;
+
+            const { data: agendaRows, error: agendaError } = await supabaseClient
+                .from('agenda')
+                .select('id, judul, tanggal, short_date, questions, created_at')
+                .order('created_at', { ascending: false })
+                .limit(1);
+
+            if (agendaError) {
+                console.error('Gagal mengambil agenda dari Supabase:', agendaError);
+                agendaData = deepClone(DEFAULT_AGENDA);
+                alert('Data agenda belum dapat diambil dari server.\n\n' + (agendaError?.message || 'Periksa koneksi Supabase dan RLS.'));
+            } else if (agendaRows && agendaRows.length > 0) {
+                const row = agendaRows[0];
+                agendaData = {
+                    id: row.id,
+                    title: row.judul || DEFAULT_AGENDA.title,
+                    date: row.tanggal || DEFAULT_AGENDA.date,
+                    shortDate: row.short_date || DEFAULT_AGENDA.shortDate,
+                    questions: Array.isArray(row.questions) ? row.questions : deepClone(DEFAULT_AGENDA.questions)
+                };
+            } else {
+                agendaData = deepClone(DEFAULT_AGENDA);
+
+                // Jika admin membuka website sebelum ada baris Agenda di database,
+                // simpan Agenda bawaan sekali ke Supabase agar menjadi data online.
+                if (sessionData.session) {
+                    try {
+                        const { data: seededAgenda, error: seedError } = await supabaseClient
+                            .from('agenda')
+                            .insert({
+                                judul: agendaData.title,
+                                tanggal: agendaData.date,
+                                short_date: agendaData.shortDate,
+                                questions: agendaData.questions
+                            })
+                            .select()
+                            .single();
+
+                        if (seedError) {
+                            console.error('Gagal menyimpan Agenda bawaan ke Supabase:', seedError);
+                        } else if (seededAgenda) {
+                            agendaData.id = seededAgenda.id;
+                        }
+                    } catch (seedError) {
+                        console.error('Proses penyimpanan Agenda bawaan gagal:', seedError);
+                    }
+                }
+            }
+
+            const { data: rumusanRows, error: rumusanError } = await supabaseClient
+                .from('rumusan')
+                .select('id, judul, deskripsi, isi, tanggal, kategori, est_time, created_at')
+                .order('created_at', { ascending: false });
+
+            if (rumusanError) {
+                console.error('Gagal mengambil rumusan dari Supabase:', rumusanError);
+                alert('Data rumusan belum dapat diambil dari server.\n\n' + (rumusanError?.message || 'Periksa koneksi Supabase dan RLS.'));
+                dbRumusan = [];
+            } else {
+                dbRumusan = (rumusanRows || []).map(r => ({
+                    id: r.id,
+                    judul: r.judul || '',
+                    tema: r.kategori || '',
+                    tanggal: r.tanggal || '',
+                    estTime: r.est_time || '3 min',
+                    ringkasan: r.deskripsi || '',
+                    isi: r.isi || ''
+                }));
+            }
+
+            const { data: galleryRows, error: galleryError } = await supabaseClient
+                .from('galeri')
+                .select('id, nama_file, path, url, caption, created_at')
+                .order('created_at', { ascending: false });
+
+            if (galleryError) {
+                console.error('Gagal mengambil galeri dari Supabase:', galleryError);
+                galleryData = [];
+            } else {
+                galleryData = (galleryRows || []).map(photo => ({
+                    id: photo.id,
+                    namaFile: photo.nama_file || '',
+                    path: photo.path || '',
+                    url: photo.url || '',
+                    caption: photo.caption || '',
+                    createdAt: photo.created_at || ''
+                }));
+            }
+        }
+
+        async function saveAgendaToSupabase() {
+            const payload = {
+                judul: agendaData.title || '',
+                tanggal: agendaData.date || '',
+                short_date: agendaData.shortDate || '',
+                questions: agendaData.questions || []
+            };
+
+            if (agendaData.id) {
+                const { data, error } = await supabaseClient
+                    .from('agenda')
+                    .update(payload)
+                    .eq('id', agendaData.id)
+                    .select()
+                    .single();
+                if (error) throw new Error('Agenda gagal disimpan ke database: ' + error.message);
+                agendaData.id = data.id;
+                return data;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('agenda')
+                .insert(payload)
+                .select()
+                .single();
+            if (error) throw new Error('Agenda gagal disimpan ke database: ' + error.message);
+            agendaData.id = data.id;
+            return data;
+        }
+
+
+
+        /* =========================================================
+           RENDER FUNCTIONS (Public UI)
+           ========================================================= */
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+
+        function renderRumusanPublic() {
+            const container = document.getElementById('rumusan-grid');
+            const emptyState = document.getElementById('empty-state');
+            if (!container) return;
+
+            container.innerHTML = '';
+            if (dbRumusan.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            emptyState.classList.add('hidden');
+
+            dbRumusan.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer";
+                card.onclick = () => bukaBacaRumusan(item.id);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
+                                ${escapeHtml(item.tema)}
+                            </span>
+                            <span class="text-[11px] text-gray-400 font-medium">
+                                <i class="fa-regular fa-calendar mr-1"></i>${escapeHtml(item.tanggal)}
+                            </span>
+                        </div>
+                        <h3 class="font-extrabold text-emerald-950 text-base sm:text-lg mb-2 leading-snug">
+                            ${escapeHtml(item.judul)}
+                        </h3>
+                        <p class="text-xs text-gray-600 line-clamp-3 leading-relaxed mb-4">
+                            ${escapeHtml(item.ringkasan)}
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-emerald-800">
+                        <span>Baca Lengkap</span>
+                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+
+        let currentReadId = null;
+        function bukaBacaRumusan(id) {
+            const item = dbRumusan.find(r => r.id === id);
+            if (!item) return;
+            currentReadId = id;
+
+            document.getElementById('reader-tema').innerText = item.tema;
+            document.getElementById('reader-tanggal').innerHTML = `<i class="fa-regular fa-calendar mr-1"></i>${escapeHtml(item.tanggal)}`;
+            document.getElementById('reader-est-time').innerText = item.estTime || '3 min';
+            document.getElementById('reader-judul').innerText = item.judul;
+            document.getElementById('reader-isi').innerHTML = item.isi;
+
+            switchSection('baca');
+        }
+
+
+        function shareToWhatsApp() {
+            const item = dbRumusan.find(r => r.id === currentReadId);
+            const title = item ? item.judul : document.getElementById('reader-judul').innerText;
+            const text = `Baca Rumusan Bahtsul Masa'il MMS: *${title}* \n\nSelengkapnya kunjungi Majlis Musyawarah Santri.`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+
+        function renderAgendaPublic() {
+            document.getElementById('home-agenda-title').innerText = agendaData.title;
+            document.getElementById('home-agenda-date').innerHTML = `<i class="fa-regular fa-clock mr-1 text-yellow-400"></i>${escapeHtml(agendaData.shortDate)}`;
+
+            document.getElementById('agenda-title').innerText = agendaData.title;
+            document.getElementById('agenda-date').innerText = agendaData.date;
+
+            const qContainer = document.getElementById('agenda-questions-container');
+            if (!qContainer) return;
+            qContainer.innerHTML = '';
+
+            if (agendaData.questions && agendaData.questions.length > 0) {
+                agendaData.questions.forEach(q => {
+                    const qBox = document.createElement('div');
+                    qBox.className = "agenda-question p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4";
+                    qBox.innerHTML = `
+                        <span class="font-bold text-emerald-800 block mb-2">${escapeHtml(q.title)}</span>
+                        <div class="text-gray-600 text-xs sm:text-sm leading-relaxed space-y-2">${q.content}</div>
+                    `;
+                    qContainer.appendChild(qBox);
+                });
+            }
+        }
+
+
+        function renderGalleryPublic() {
+            const grid = document.getElementById('gallery-grid');
+            if (!grid) return;
+
+            let html = `
+                <div class="masonry-item group relative rounded-xl overflow-hidden shadow-sm cursor-pointer bg-black">
+                    <a href="foto32.jpeg" download class="gallery-download" title="Download Foto">
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                    <div onclick="openLightbox('foto32.jpeg', 'Dokumentasi Majlis Musyawarah Santri ke-36')">
+                        <img loading="lazy" decoding="async" src="foto32.jpeg" alt="Galeri 32" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                            <span class="text-[9px] font-bold text-yellow-400 uppercase">10 Agu 2026</span>
+                            <h3 class="text-white font-bold text-xs leading-snug">MMS ke-36</h3>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (galleryData && galleryData.length > 0) {
+                galleryData.forEach((photo) => {
+                    html += `
+                        <div class="masonry-item group relative rounded-xl overflow-hidden shadow-sm cursor-pointer bg-black">
+                            <a href="${photo.url}" download class="gallery-download" title="Download Foto">
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                            <div onclick="openLightbox('${photo.url}', '${escapeHtml(photo.caption)}')">
+                                <img loading="lazy" decoding="async" src="${photo.url}" alt="Galeri Tambahan" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3">
+                                    <h3 class="text-white font-bold text-xs leading-snug">${escapeHtml(photo.caption)}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            grid.innerHTML = html;
+        }
+
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+
+        /* =========================================================
+           NAVIGASI
+           ========================================================= */
+
+        function switchSection(targetId, fromHistory = false) {
+            if (targetId === 'admin' && !isAdminLoggedIn) {
+                openLoginModal();
+                return;
+            }
+
+            const sections = ['beranda', 'arsip', 'baca', 'galeri', 'tentang', 'agenda', 'admin'];
+            const currentSection = document.querySelector('section:not(.hidden)');
+            const currentId = currentSection ? currentSection.id.replace('section-', '') : 'beranda';
+
+            if (!fromHistory && currentId !== targetId) {
+                history.pushState({ section: targetId }, '', window.location.href);
+            }
+
+            sections.forEach(sec => {
+                const el = document.getElementById(`section-${sec}`);
+                if (el) {
+                    if (sec === targetId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            if (targetId === 'beranda') {
+                document.body.classList.add('home-lock');
+                window.scrollTo(0, 0);
+            } else {
+                document.body.classList.remove('home-lock');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+                if (btn.getAttribute('data-target') === targetId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                if (btn.getAttribute('data-target') === targetId) {
+                    btn.classList.add('text-yellow-400');
+                    btn.classList.remove('text-white/90');
+                } else {
+                    btn.classList.remove('text-yellow-400');
+                    btn.classList.add('text-white/90');
+                }
+            });
+
+            if (targetId === 'admin') {
+                renderAdminData();
+            }
+        }
+
+
+        /* =========================================================
+           LOGIN & ADMIN DASHBOARD LOGIC
+           ========================================================= */
+
+        async function openLoginModal() {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data.session) {
+                isAdminLoggedIn = true;
+                switchSection('admin');
+                return;
+            }
+            document.getElementById('login-modal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('login-modal').classList.add('hidden');
+        }
+
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const pass = document.getElementById('login-password').value;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password: pass
+            });
+
+            if (error) {
+                console.error(error);
+                alert('Login gagal. Periksa email dan sandi akun admin Supabase.');
+                return;
+            }
+
+            isAdminLoggedIn = !!data.session;
+            closeLoginModal();
+            await loadData();
+            renderRumusanPublic();
+            renderAdminData();
+            switchSection('admin');
+        }
+
+        async function adminLogout() {
+            await supabaseClient.auth.signOut();
+            isAdminLoggedIn = false;
+            switchSection('beranda');
+        }
+
+
+        function switchAdminTab(tabId) {
+            const tabs = ['tab-rumusan', 'tab-galeri', 'tab-agenda', 'tab-settings'];
+            const btnIds = ['btn-tab-rumusan', 'btn-tab-galeri', 'btn-tab-agenda', 'btn-tab-settings'];
+
+            tabs.forEach((t, i) => {
+                const el = document.getElementById(t);
+                const btn = document.getElementById(btnIds[i]);
+                if (t === tabId) {
+                    el.classList.remove('hidden');
+                    btn.className = "px-4 py-2 rounded-xl font-bold text-xs bg-emerald-900 text-white transition-colors";
+                } else {
+                    el.classList.add('hidden');
+                    btn.className = "px-4 py-2 rounded-xl font-bold text-xs bg-white text-gray-700 hover:bg-gray-100 transition-colors border border-gray-200";
+                }
+            });
+        }
+
+        function formatText(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+
+        function formatTextQ(command, value = null) {
+            document.execCommand(command, false, value);
+        }
+
+        function renderAdminData() {
+            // Render Admin Rumusan List
+            const rumusanList = document.getElementById('admin-rumusan-list');
+            if (rumusanList) {
+                rumusanList.innerHTML = '';
+                dbRumusan.forEach((r, idx) => {
+                    rumusanList.innerHTML += `
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs">
+                            <div>
+                                <span class="font-bold text-emerald-900">${escapeHtml(r.judul)}</span>
+                                <span class="text-gray-500 ml-2">(${escapeHtml(r.tema)})</span>
+                            </div>
+                            <button onclick="deleteRumusan(${r.id})" class="text-red-600 hover:text-red-800 font-bold px-2 py-1"><i class="fa-solid fa-trash"></i> Hapus</button>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Admin Gallery List
+            const galleryList = document.getElementById('admin-gallery-list');
+            if (galleryList) {
+                galleryList.innerHTML = '';
+                galleryData.forEach((photo, idx) => {
+                    galleryList.innerHTML += `
+                        <div class="relative rounded-xl overflow-hidden border border-gray-200 bg-black group">
+                            <img src="${photo.url}" class="w-full h-24 object-cover">
+                            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">
+                                <span class="text-[10px] text-white truncate">${escapeHtml(photo.caption)}</span>
+                                <button onclick="deleteGallery(${idx})" class="self-end bg-red-600 text-white text-[10px] px-2 py-1 rounded"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Agenda inputs
+            document.getElementById('admin-agenda-title-input').value = agendaData.title;
+            document.getElementById('admin-agenda-date-input').value = agendaData.date;
+            document.getElementById('admin-agenda-shortdate-input').value = agendaData.shortDate;
+
+            // Render Questions List
+            const qList = document.getElementById('admin-questions-list');
+            if (qList) {
+                qList.innerHTML = '';
+                agendaData.questions.forEach((q, idx) => {
+                    qList.innerHTML += `
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 text-xs">
+                            <div>
+                                <span class="font-bold text-emerald-900 block">${escapeHtml(q.title)}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="openEditQuestion(${idx})" class="text-blue-600 hover:text-blue-800 font-bold px-2 py-1"><i class="fa-solid fa-pen"></i> Edit</button>
+                                <button onclick="deleteQuestion(${idx})" class="text-red-600 hover:text-red-800 font-bold px-2 py-1"><i class="fa-solid fa-trash"></i> Hapus</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+
+        // TAMBAH RUMUSAN
+        async function handleTambahRumusan(event) {
+            event.preventDefault();
+
+            const judul = document.getElementById('admin-rumusan-judul').value.trim();
+            const tema = document.getElementById('admin-rumusan-tema').value.trim();
+            const tanggal = document.getElementById('admin-rumusan-tanggal').value.trim();
+            const estTime = document.getElementById('admin-rumusan-est').value.trim();
+            const ringkasan = document.getElementById('admin-rumusan-ringkasan').value.trim();
+            const isi = document.getElementById('admin-rumusan-editor').innerHTML;
+
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            if (!sessionData.session) {
+                alert('Sesi admin sudah berakhir. Silakan login kembali.');
+                isAdminLoggedIn = false;
+                openLoginModal();
+                return;
+            }
+
+            const { data, error } = await supabaseClient
+                .from('rumusan')
+                .insert({
+                    judul,
+                    kategori: tema,
+                    tanggal,
+                    est_time: estTime || '3 min',
+                    deskripsi: ringkasan,
+                    isi
+                })
+                .select()
+                .single();
+
+            if (error) {
+                console.error(error);
+                alert('Rumusan gagal disimpan ke Supabase: ' + error.message);
+                return;
+            }
+
+            dbRumusan.unshift({
+                id: data.id,
+                judul: data.judul,
+                tema: data.kategori || '',
+                tanggal: data.tanggal || '',
+                estTime: data.est_time || '3 min',
+                ringkasan: data.deskripsi || '',
+                isi: data.isi || ''
+            });
+
+            renderRumusanPublic();
+            renderAdminData();
+            event.target.reset();
+            document.getElementById('admin-rumusan-editor').innerHTML = '';
+            alert('Rumusan berhasil disimpan dan langsung tampil untuk semua pengunjung.');
+        }
+
+
+        async function deleteRumusan(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus rumusan ini?')) return;
+
+            const { error } = await supabaseClient.from('rumusan').delete().eq('id', id);
+            if (error) {
+                console.error(error);
+                alert('Rumusan gagal dihapus: ' + error.message);
+                return;
+            }
+
+            dbRumusan = dbRumusan.filter(r => r.id !== id);
+            renderRumusanPublic();
+            renderAdminData();
+        }
+
+
+
+        // UPLOAD GALERI
+        async function handleUploadGaleri(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const fileInput = document.getElementById('admin-galeri-file');
+            const captionInput = document.getElementById('admin-galeri-caption');
+            const submitButton = document.getElementById('admin-galeri-submit');
+            const statusEl = document.getElementById('admin-galeri-status');
+            const caption = captionInput.value.trim();
+            const file = fileInput.files && fileInput.files[0];
+
+            const setStatus = (message, visible = true) => {
+                if (!statusEl) return;
+                statusEl.textContent = message;
+                statusEl.classList.toggle('hidden', !visible);
+            };
+
+            const setBusy = (busy) => {
+                if (!submitButton) return;
+                submitButton.disabled = busy;
+                submitButton.classList.toggle('opacity-60', busy);
+                submitButton.classList.toggle('cursor-not-allowed', busy);
+                submitButton.innerHTML = busy
+                    ? '<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengupload...</span>'
+                    : '<i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload & Simpan Foto</span>';
+            };
+
+            if (!file) {
+                alert('Pilih foto terlebih dahulu.');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('File yang dipilih harus berupa gambar.');
+                return;
+            }
+
+            if (!caption) {
+                alert('Isi keterangan/caption foto terlebih dahulu.');
+                captionInput.focus();
+                return;
+            }
+
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            if (!sessionData.session) {
+                alert('Sesi Admin sudah berakhir. Silakan login kembali.');
+                return;
+            }
+
+            setBusy(true);
+            setStatus('Mengupload foto ke server...');
+
+            try {
+                const safeName = file.name
+                    .toLowerCase()
+                    .replace(/[^a-z0-9._-]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+
+                // Tidak bergantung pada crypto.randomUUID agar tetap kompatibel
+                // pada browser/kondisi hosting yang tidak menyediakan API tersebut.
+                const uniquePart = (typeof crypto !== 'undefined' && crypto.randomUUID)
+                    ? crypto.randomUUID()
+                    : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+                const filePath = `${Date.now()}-${uniquePart}-${safeName || 'foto'}`;
+
+                const { error: uploadError } = await supabaseClient.storage
+                    .from('galeri')
+                    .upload(filePath, file, {
+                        cacheControl: '3600',
+                        upsert: false,
+                        contentType: file.type
+                    });
+
+                if (uploadError) {
+                    console.error('Upload Storage gagal:', uploadError);
+                    throw new Error('Foto gagal diupload ke Storage: ' + uploadError.message);
+                }
+
+                setStatus('Foto sudah masuk Storage. Menyimpan data galeri...');
+
+                const { data: publicUrlData } = supabaseClient.storage
+                    .from('galeri')
+                    .getPublicUrl(filePath);
+
+                const publicUrl = publicUrlData?.publicUrl;
+                if (!publicUrl) {
+                    await supabaseClient.storage.from('galeri').remove([filePath]);
+                    throw new Error('URL publik foto tidak berhasil dibuat.');
+                }
+
+                const { data: galleryRow, error: dbError } = await supabaseClient
+                    .from('galeri')
+                    .insert({
+                        nama_file: file.name,
+                        path: filePath,
+                        url: publicUrl,
+                        caption
+                    })
+                    .select()
+                    .single();
+
+                if (dbError) {
+                    console.error('Penyimpanan database gagal:', dbError);
+                    await supabaseClient.storage.from('galeri').remove([filePath]);
+                    throw new Error('Foto sudah masuk Storage, tetapi data galeri gagal disimpan: ' + dbError.message);
+                }
+
+                // Tampilkan hasil dari database tanpa menunggu reload halaman.
+                galleryData.unshift({
+                    id: galleryRow.id,
+                    namaFile: galleryRow.nama_file,
+                    path: galleryRow.path,
+                    url: galleryRow.url,
+                    caption: galleryRow.caption || '',
+                    createdAt: galleryRow.created_at || ''
+                });
+
+                renderGalleryPublic();
+                renderAdminData();
+                form.reset();
+                setStatus('✓ Foto berhasil disimpan online dan sudah masuk Galeri.');
+                alert('Foto berhasil diupload dan disimpan online.');
+            } catch (error) {
+                console.error('Proses upload galeri gagal:', error);
+                setStatus('✕ Upload gagal.');
+                alert(error?.message || 'Foto gagal diupload. Silakan coba lagi.');
+            } finally {
+                setBusy(false);
+            }
+        }
+
+        async function deleteGallery(idx) {
+            if (!galleryData[idx]) return;
+            if (!confirm('Apakah Anda yakin ingin menghapus foto ini?')) return;
+
+            const photo = galleryData[idx];
+
+            const { error: dbError } = await supabaseClient
+                .from('galeri')
+                .delete()
+                .eq('id', photo.id);
+
+            if (dbError) {
+                console.error(dbError);
+                alert('Data foto gagal dihapus: ' + dbError.message);
+                return;
+            }
+
+            if (photo.path) {
+                const { error: storageError } = await supabaseClient.storage
+                    .from('galeri')
+                    .remove([photo.path]);
+
+                if (storageError) {
+                    console.error(storageError);
+                    alert('Data foto sudah dihapus dari database, tetapi file foto di Storage gagal dihapus: ' + storageError.message);
+                }
+            }
+
+            galleryData.splice(idx, 1);
+            renderGalleryPublic();
+            renderAdminData();
+        }
+
+
+
+        // AGENDA & AS'ILAH
+        async function handleUpdateAgendaInfo(event) {
+            event.preventDefault();
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            if (!sessionData.session) {
+                alert('Sesi admin sudah berakhir. Silakan login kembali.');
+                isAdminLoggedIn = false;
+                openLoginModal();
+                return;
+            }
+
+            agendaData.title = document.getElementById('admin-agenda-title-input').value.trim();
+            agendaData.date = document.getElementById('admin-agenda-date-input').value.trim();
+            agendaData.shortDate = document.getElementById('admin-agenda-shortdate-input').value.trim();
+
+            try {
+                await saveAgendaToSupabase();
+                renderAgendaPublic();
+                renderAdminData();
+                alert('Informasi agenda berhasil disimpan online dan dapat dilihat semua pengunjung.');
+            } catch (error) {
+                alert(error?.message || 'Agenda gagal disimpan.');
+            }
+        }
+
+        function openAddQuestionModal() {
+            document.getElementById('edit-q-index').value = -1;
+            document.getElementById('admin-q-title').value = '';
+            document.getElementById('admin-q-editor').innerHTML = '';
+            document.getElementById('question-modal-title').innerText = 'Tambah As\'ilah Baru';
+            document.getElementById('question-modal').classList.remove('hidden');
+        }
+
+        function openEditQuestion(idx) {
+            const q = agendaData.questions[idx];
+            document.getElementById('edit-q-index').value = idx;
+            document.getElementById('admin-q-title').value = q.title;
+            document.getElementById('admin-q-editor').innerHTML = q.content;
+            document.getElementById('question-modal-title').innerText = 'Edit As\'ilah';
+            document.getElementById('question-modal').classList.remove('hidden');
+        }
+
+        function closeQuestionModal() {
+            document.getElementById('question-modal').classList.add('hidden');
+        }
+
+        async function handleSaveQuestion(event) {
+            event.preventDefault();
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            if (!sessionData.session) {
+                alert('Sesi admin sudah berakhir. Silakan login kembali.');
+                isAdminLoggedIn = false;
+                openLoginModal();
+                return;
+            }
+
+            const idx = parseInt(document.getElementById('edit-q-index').value);
+            const title = document.getElementById('admin-q-title').value.trim();
+            const content = document.getElementById('admin-q-editor').innerHTML.trim();
+            if (!title) {
+                alert("Judul As'ilah wajib diisi.");
+                return;
+            }
+
+            if (idx === -1) {
+                agendaData.questions.push({ id: Date.now(), title, content });
+            } else if (agendaData.questions[idx]) {
+                agendaData.questions[idx].title = title;
+                agendaData.questions[idx].content = content;
+            }
+
+            try {
+                await saveAgendaToSupabase();
+                renderAgendaPublic();
+                renderAdminData();
+                closeQuestionModal();
+                event.target.reset();
+                document.getElementById('admin-q-editor').innerHTML = '';
+                alert("As'ilah berhasil disimpan online dan langsung tampil untuk semua pengunjung.");
+            } catch (error) {
+                alert(error?.message || "As'ilah gagal disimpan.");
+            }
+        }
+
+        async function deleteQuestion(idx) {
+            if (!agendaData.questions[idx]) return;
+            if (!confirm("Apakah Anda yakin ingin menghapus as'ilah ini?")) return;
+
+            const { data: sessionData } = await supabaseClient.auth.getSession();
+            if (!sessionData.session) {
+                alert('Sesi admin sudah berakhir. Silakan login kembali.');
+                isAdminLoggedIn = false;
+                openLoginModal();
+                return;
+            }
+
+            const removedQuestion = agendaData.questions.splice(idx, 1)[0];
+            try {
+                await saveAgendaToSupabase();
+                renderAgendaPublic();
+                renderAdminData();
+                alert("As'ilah berhasil dihapus dari database online.");
+            } catch (error) {
+                agendaData.questions.splice(idx, 0, removedQuestion);
+                renderAgendaPublic();
+                renderAdminData();
+                alert(error?.message || "As'ilah gagal dihapus.");
+            }
+        }
+
+
+        // GANTI KREDENSIAL ADMIN
+        async function handleChangeCredentials(event) {
+            event.preventDefault();
+            const newPass = document.getElementById('admin-new-password').value.trim();
+
+            if (!newPass) {
+                alert('Masukkan sandi baru.');
+                return;
+            }
+
+            const { error } = await supabaseClient.auth.updateUser({ password: newPass });
+            if (error) {
+                alert('Sandi gagal diperbarui: ' + error.message);
+                return;
+            }
+
+            event.target.reset();
+            alert('Sandi Admin Supabase berhasil diperbarui.');
+        }
+
+
+
+        /* =========================================================
+           PENCARIAN
+           ========================================================= */
+
+        function focusHeroSearch() {
+            const input = document.getElementById('hero-inline-search');
+            if (input) input.focus();
+        }
+
+        function handleHeroSearch(event) {
+            const keyword = event.target.value.trim().toLowerCase();
+            if (keyword.length > 0) {
+                openSearchModal();
+                document.getElementById('modal-search-input').value = keyword;
+                performSearch(keyword);
+            }
+        }
+
+        function openSearchModal() {
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('modal-search-input').focus();
+        }
+
+        function closeSearchModal() {
+            document.getElementById('search-modal').classList.add('hidden');
+        }
+
+        function handleModalSearch(event) {
+            const keyword = event.target.value.trim().toLowerCase();
+            performSearch(keyword);
+        }
+
+        function performSearch(keyword) {
+            const container = document.getElementById('modal-search-results');
+            if (!container) return;
+
+            if (!keyword) {
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-6">Mulai ketik untuk mencari rumusan...</p>`;
+                return;
+            }
+
+            const results = dbRumusan.filter(r => 
+                r.judul.toLowerCase().includes(keyword) || 
+                r.tema.toLowerCase().includes(keyword) || 
+                r.ringkasan.toLowerCase().includes(keyword)
+            );
+
+            if (results.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">Tidak ditemukan rumusan dengan kata kunci "${escapeHtml(keyword)}"</p>`;
+                return;
+            }
+
+            let html = '';
+            results.forEach(r => {
+                html += `
+                    <div onclick="closeSearchModal(); switchSection('arsip'); bukaBacaRumusan(${r.id})"
+                         class="p-3 rounded-xl bg-gray-50 hover:bg-emerald-50 border border-gray-100 cursor-pointer transition-colors">
+                        <span class="text-[9px] font-bold uppercase px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">${escapeHtml(r.tema)}</span>
+                        <h4 class="font-bold text-emerald-950 text-xs sm:text-sm mt-1">${escapeHtml(r.judul)}</h4>
+                        <p class="text-[11px] text-gray-500 line-clamp-1 mt-0.5">${escapeHtml(r.ringkasan)}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+
+        /* =========================================================
+           INISIALISASI APLIKASI
+           ========================================================= */
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            await loadData();
+            renderRumusanPublic();
+            renderAgendaPublic();
+            renderGalleryPublic();
+
+            window.addEventListener('popstate', (event) => {
+                if (event.state && event.state.section) {
+                    switchSection(event.state.section, true);
+                } else {
+                    switchSection('beranda', true);
+                }
+            });
+
+            if (!history.state) {
+                history.replaceState({ section: 'beranda' }, '', window.location.href);
+            }
+        });
+
+    </script>
+</body>
+</html>
